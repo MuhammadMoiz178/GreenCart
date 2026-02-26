@@ -20,6 +20,21 @@ export const AppContextProvider = ({children}) => {
     const [products,setProducts] = useState([])
     const [cartItems,setCartItems] = useState({})
     const [searchQuery,setSearchQuery] = useState({})
+
+    // Fetch Seller Status
+    const fetchSeller = async () => {
+       try {
+         const {data} = await axios.get('/api/seller/is-auth');
+         if(data.success) {
+             setIsSeller(true);
+         } else {
+             setIsSeller(false)
+         }
+       } catch (error) {
+        setIsSeller(false)
+       }
+    }
+
     // Fetch all Products
     const fetchProducts = async () => {
         setProducts(dummyProducts)
@@ -79,6 +94,7 @@ export const AppContextProvider = ({children}) => {
         return Math.floor(totalAmount * 100) / 100;
     }
     useEffect(()=>{
+        fetchSeller()
         fetchProducts();
     },[])
 
