@@ -34,7 +34,7 @@ export const placeOrderCOD = async (req,res) => {
 }
 
 
-// Get Orders by User Id : /api/ordee/user
+// Get Orders by User Id : /api/order/user
 export const getUserOrders = async (req,res) => {
     try {
         const userId = req.userId; // Using req.userId from auth middleware
