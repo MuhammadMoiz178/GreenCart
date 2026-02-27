@@ -36,7 +36,7 @@ export const placeOrderCOD = async (req,res) => {
 
 
 // Place Order Stripe : /api/order/stripe
-export const placeOrderStripe = async (request,response) => {
+export const placeOrderStripe = async (req,res) => {
     try {
         const {items,address} = req.body
         const userId = req.userId; // Now using req.userId from auth middleware
@@ -113,12 +113,12 @@ export const stripeWebHooks = async (req,res) => {
     let event;
     try {
         event = stripeInstance.webhooks.constructEvent(
-            request.body,
+            req.body,
             sig,
             process.env.STRIPE_WEBHOOK_SECRET,
         )
     } catch (error) {
-        response.status(400).send(`WebHook Error ${error.message}`)
+        res.status(400).send(`WebHook Error ${error.message}`)
     }
 
     // Handle the event
@@ -153,7 +153,7 @@ export const stripeWebHooks = async (req,res) => {
       console.error(`Unhandled event type ${event.type}`);
       break;
   }
-  response.json({ received: true });
+  res.json({ received: true });
 }
 
 
